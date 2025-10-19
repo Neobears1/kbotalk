@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KBO 수다방 규칙</title>
+  <style>
+    /* 폰트, 기본 설정 */
+    body {
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #111;
+      text-align: center;
+    }
+
+    /* 헤더 */
+    header {
+      background-color: #002561;
+      color: white;
+      padding: 15px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    /* 네비게이션: 모바일 최적화 */
+    nav {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      background-color: #003580;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    
+    nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    nav a {
+      color: white;
+      padding: 12px 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9em;
+      flex-shrink: 0;
+    }
+
+    nav a:hover {
+      background-color: #0049b7;
+    }
+
+    /* 섹션: 컨텐츠 영역 스타일 */
+    section {
+      display: none;
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      margin: 10px auto 20px auto;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 1.4em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* 규칙 관련 스타일 */
+    .notice strong.red {
+      color: red;
+      font-weight: bold;
+    }
+
+    .notice .warn {
+      color: red;
+      font-weight: 400;
+      text-align: center;
+    }
+    
+    .notice .rule-item {
+        margin-bottom: 20px; /* 규칙 항목 간격 넓힘 */
+        padding-bottom: 5px;
+        border-bottom: 1px dashed #eee;
+    }
+
+    .notice .rule-title {
+        font-weight: bold;
+        color: #002561;
+        margin-bottom: 5px;
+    }
+
+    .notice .rule-description {
+        font-size: 0.9em;
+        color: #555;
+        padding-left: 15px;
+        margin-top: 5px;
+    }
+
+    .notice p {
+        margin-bottom: 8px;
+    }
+    
+    .notice p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* 팀 리스트 스타일 */
+    .team-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    .team-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 1.1em;
+    }
+    
+    .team-list li:last-child {
+        border-bottom: none;
+    }
+
+    .team-list li a {
+      text-decoration: none;
+      color: #003580;
+      font-weight: bold;
+    }
+
+    .team-list li a:hover {
+      text-decoration: underline;
+    }
+
+    /* 버튼 스타일 */
+    button {
+      background-color: #003580;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    button:hover {
+      background-color: #0049b7;
+    }
+
+    p.tip {
+      color: #003580;
+      font-size: 0.85em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* 미디어 쿼리 */
+    @media (max-width: 650px) {
+        section {
+            width: 95%;
+        }
+    }
+    
+    @media (min-width: 481px) {
+      nav {
+        justify-content: center;
+        overflow-x: hidden;
+      }
+      nav a {
+        padding: 12px 15px;
+        font-size: 0.95em;
+      }
+      button {
+          width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>KBO 수다방 규칙</header>
+
+<nav>
+  <a href="#" onclick="showTab('notice', event)">📢 공지사항</a>
+  <a href="#" onclick="showTab('teams', event)">🏟 팀 소개</a>
+  <a href="#" onclick="showTab('schedule', event)">🗓 경기 일정</a>
+  <a href="#" onclick="showTab('news', event)">📰 야구 소식</a>
+  <a href="#" onclick="showTab('contact', event)">💬 문의</a>
+</nav>
+
+<section id="notice" class="tab-content active">
+  <h2>⚾️ 규칙 ⚾️</h2>
+  <div class="notice">
+    <p style="text-align: center;">이 방은 10개 구단 팬들이 모두 모여있는 오픈채팅방입니다.<br>
+    <strong class="red">대화 시 상대와 타 팀 팬들을 존중해주세요.</strong></p>
+
+    <p style="text-align: center; margin-bottom: 15px;">아래 규칙을 읽지 않고 생기는 일에 대한 책임은 본인에게 있습니다.</p>
+    <p class="warn">⚠️ 경고 3회 누적 시 강퇴 (상황에 따라 관리자가 재량껏 즉시 강퇴 가능)</p>
+
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 협의되지 않은 홍보 금지</p>
+        <p class="rule-description">- 개인 오픈톡, 유튜브, 뉴스픽 등 상업적/개인 채널 홍보는 금지합니다.</p>
+    </div>
+     
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 욕설 & 상대 존중에 어긋나는 행위 금지 (반말)</p>
+        <p class="rule-description">- 상대방에게 욕설이나 반말은 허용되지 않습니다. 선수에게 하는 비난성 발언도 수위를 지켜주세요.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 상대 팀 비하, 과도한 자팀 비하 금지</p>
+        <p class="rule-description">- 타 팀 팬을 불쾌하게 하는 비하 발언이나 팀 조롱은 금지됩니다. 다만, 자팀 선수에 대한 정당한 비판은 허용됩니다.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 정치 이야기 및 언급 ❌, 국가 비상사태 비하 ❌</p>
+        <p class="rule-description">- 대화가 해당 주제로 흐르지 않도록 주의해주세요.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 도배 / 만능봇 / 어그로 ❌</p>
+        <p class="rule-description">-발생 시 모든 운영진을 호출해주세요.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 티켓, 용품, 게임 계정 등 판매·거래·나눔 ❌</p>
+        <p class="rule-description">- 개인 간의 금전 거래 및 물품 교환/판매는 악용 및 분쟁의 소지가 크므로 절대 금지합니다.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 음슴체 사용 ❌ (1회부터 경고)</p>
+        <p class="rule-description">- '~함', '~임', '했음' 등의 문체는 상대 존중에 어긋나다고 판단합니다.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 투표는 관리자 허가 후 게시, 마감 시간 명시 필수</p>
+        <p class="rule-description">- 반드시 관리자에게 먼저 문의해주세요.</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 상위권 팀 해체 / 가을야구 못간다 발언 ❌</p>
+        <p class="rule-description">- 하위권 팀 팬들 박탈감이 큽니다</p>
+    </div>
+    
+    <div class="rule-item">
+        <p class="rule-title">⚾️ 동행 직관 시 책임은 관리자가 아닌 본인에게 있습니다.</p>
+        <p class="rule-description">- 채팅방 내에서 개인적으로 만남을 약속하고 발생하는 모든 사고 및 분쟁은 운영진이 책임지지 않습니다.</p>
+    </div>
+    
+  </div>
+</section>
+
+<section id="teams" class="tab-content">
+  <h2>🏟 팀 소개</h2>
+  <p class="tip">팀 이름을 클릭하면 소개 홈페이지로 이동합니다.</p>
+  <ul class="team-list">
+    <li><a href="https://www.lgtwins.com" target="_blank">LG 트윈스</a></li>
+    <li><a href="https://www.doosanbears.com" target="_blank">두산 베어스</a></li>
+    <li><a href="https://www.heroesbaseball.co.kr" target="_blank">키움 히어로즈</a></li>
+    <li><a href="https://www.ktwiz.co.kr" target="_blank">KT 위즈</a></li>
+    <li><a href="https://www.ssglanders.com" target="_blank">SSG 랜더스</a></li>
+    <li><a href="https://www.hanwhaeagles.co.kr" target="_blank">한화 이글스</a></li>
+    <li><a href="https://www.samsunglions.com" target="_blank">삼성 라이온즈</a></li>
+    <li><a href="https://tigers.co.kr" target="_blank">KIA 타이거즈</a></li>
+    <li><a href="https://www.giantsclub.com" target="_blank">롯데 자이언츠</a></li>
+    <li><a href="https://www.ncdinos.com" target="_blank">NC 다이노스</a></li>
+  </ul>
+</section>
+
+<section id="schedule" class="tab-content">
+  <h2>🗓 오늘의 경기 일정</h2>
+  <p style="text-align: center;">오늘의 KBO 경기 일정을 보시려면 아래 버튼을 눌러주세요.</p>
+  <div style="text-align: center;">
+    <a href="https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx" target="_blank">
+      <button>오늘 경기 일정 보기</button>
+    </a>
+  </div>
+</section>
+
+<section id="news" class="tab-content">
+  <h2>📰 야구 소식</h2>
+  <p style="text-align: center;">KBO 공식 홈페이지의 최신 야구 소식을 확인할 수 있습니다.</p>
+  <div style="text-align: center;">
+    <a href="https://www.koreabaseball.com/MediaNews/News/BreakingNews/List.aspx" target="_blank">
+      <button>최신 야구 뉴스 보기</button>
+    </a>
+  </div>
+</section>
+
+<section id="contact" class="tab-content">
+  <h2>💬 문의</h2>
+  <p style="text-align: center;">아래 버튼을 눌러 오픈채팅방으로 이동하세요.</p>
+  <div style="text-align: center;">
+    <a href="https://open.kakao.com/o/guehxdfh" target="_blank">
+      <button>2025 KBO 사담방</button>
+    </a>
+    <br>
+    <a href="https://open.kakao.com/o/ss4yn4th" target="_blank">
+      <button style="margin-top: 10px;">⚾️ 문의방 (비번 1985)</button>
+    </a>
+  </div>
+</section>
+
+<script>
+  function showTab(tabId, event) {
+    if (event) event.preventDefault();
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
