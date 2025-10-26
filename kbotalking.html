@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBO 팬 소통방 가이드</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        /* 폰트, 기본 설정 */
+        body {
+            font-family: "Pretendard", "Noto Sans KR", sans-serif;
+            margin: 0;
+            padding-top: 80px; /* 고정 헤더와 네비 높이 확보 */
+            background-color: #f0f2f5;
+            color: #111;
+            text-align: center;
+        }
+
+        /* 1. 고정 헤더 (KBO 통합 블루 테마) */
+        header {
+            position: fixed; /* 헤더 고정 */
+            top: 0;
+            width: 100%;
+            background-color: #002561; /* KBO 통합 네이비 */
+            color: white;
+            padding: 15px 0;
+            font-size: 1.2em;
+            font-weight: 700;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 2. 고정 네비게이션 (모바일 최적화) */
+        nav {
+            position: fixed; /* 네비게이션 고정 */
+            top: 50px; /* 헤더 높이 아래에 위치 */
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            background-color: #003580;
+            white-space: nowrap;
+            scrollbar-width: none;
+            z-index: 999;
+        }
+        
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: white;
+            padding: 12px 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+
+        nav a:hover,
+        nav a.active-tab {
+            background-color: #0049b7; /* 활성 탭 색상 */
+            color: white;
+        }
+
+        /* 섹션: 컨텐츠 영역 스타일 */
+        section {
+            display: none;
+            padding: 25px 20px;
+            max-width: 650px;
+            width: 90%;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #002561; /* KBO 통합 네이비 제목 */
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        /* 규칙 관련 스타일 */
+        .notice strong.red {
+            color: #d32f2f; /* 경고 레드 */
+            font-weight: 800;
+        }
+
+        .notice .warn {
+            color: #d32f2f;
+            font-weight: 600;
+            text-align: center;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .notice .rule-item {
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .notice .rule-title {
+            font-weight: 700;
+            color: #003580;
+            margin-bottom: 5px;
+        }
+
+        .notice .rule-description {
+            font-size: 0.95em;
+            color: #333;
+            padding-left: 15px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        
+        /* 팀 리스트 스타일 */
+        .team-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .team-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1em;
+        }
+        
+        .team-list li a {
+            text-decoration: none;
+            color: #003580;
+            font-weight: bold;
+        }
+
+        .team-list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* 버튼 스타일 */
+        button {
+            background-color: #003580;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 300px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0049b7; 
+        }
+
+        p.tip {
+            color: #003580;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 미디어 쿼리 */
+        @media (max-width: 650px) {
+            section {
+                width: 95%;
+            }
+        }
+        
+        @media (min-width: 481px) {
+            nav {
+                justify-content: center;
+                overflow-x: hidden;
+            }
+            .button-group {
+                 flex-direction: row;
+                 justify-content: center;
+            }
+            .button-group button {
+                width: 48%; /* 데스크탑에서 버튼 두 개 가로 배치 */
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>⚾ KBO 팬 소통방 가이드 ⚾</header>
+
+<nav id="main-nav">
+    <a href="#" onclick="showTab('notice', event, this)" data-tab="notice" class="active-tab">📢 공지 & 규칙</a>
+    <a href="#" onclick="showTab('teams', event, this)" data-tab="teams">🏟 팀 소개</a>
+    <a href="#" onclick="showTab('schedule', event, this)" data-tab="schedule">🗓 경기 일정</a>
+    <a href="#" onclick="showTab('info', event, this)" data-tab="info">📊 야구 정보</a>
+    <a href="#" onclick="showTab('contact', event, this)" data-tab="contact">💬 문의</a>
+</nav>
+
+<section id="notice" class="tab-content active">
+    <h2>⚾️ 필수 규칙 & 운영 정책 ⚾️</h2>
+    <div class="notice">
+        <p style="text-align: center;">이 방은 10개 구단 팬들이 모두 모여있는 오픈채팅방입니다.<br>
+        <strong class="red">대화 시 상대와 타 팀 팬들을 존중해주세요.</strong></p>
+
+        <p style="text-align: center; margin-bottom: 15px;">아래 규칙을 숙지하지 않아 생기는 불이익은 본인 책임입니다.</p>
+        <p class="warn">⚠️ 경고 3회 누적 시 강퇴 (상황에 따라 관리자가 재량껏 즉시 강퇴 가능)</p>
+
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 협의되지 않은 홍보 및 금전 거래 ❌</p>
+            <p class="rule-description">- 개인 오픈톡, 유튜브, 뉴스픽 등 상업적/개인 채널 홍보는 금지합니다.</p>
+        </div>
+        
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 욕설 & 상대 존중에 어긋나는 행위 ❌ (반말, 음슴체 포함)</p>
+            <p class="rule-description">- 상대방에게 직접적인 욕설이나 반말은 허용되지 않습니다. XX까진 허용, 음슴체 금지</p>
+        </div>
+        
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 타 팀 비하, 지역 비하 발언 ❌</p>
+            <p class="rule-description">- 타 팀 팬을 불쾌하게 하는 비하 발언이나 조롱은 금지됩니다. 다만, 자팀 선수에 대한 정당한 비판은 허용됩니다.</p>
+        </div>
+        
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 정치 및 민감한 사회 이슈 언급 및 비하❌</p>
+            <p class="rule-description">- 대화가 해당 주제로 흐르지 않도록 주의해주세요.</p>
+        </div>
+
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 티켓,야구용품,게임 계정 등 거래❌</p>
+            <p class="rule-description">- 교환,판매,나눔,양도 등등 소유권 이전 행위는 악용&분쟁 소지가 커, 우리 방에서는 금지합니다.</p>
+        </div>
+
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 도배 / 어그로 / 과도한 감정 표출 ❌</p>
+            <p class="rule-description">- 발생 시 운영진을 호출해주세요.</p>
+        </div>
+        
+<div class="rule-item">
+            <p class="rule-title">⚾️ 상위권 팀 팬들의 무분별한 팀 해체,가을야구 못간다 발언❌</p>
+            <p class="rule-description">-하위권 팀 팬들 박탈감이 큽니다.</p>
+        </div>
+
+<div class="rule-item">
+            <p class="rule-title">⚾️ 투표는 관리진 허가 후에,마감 시간 설정해서!</p>
+            <p class="rule-description">- 반드시 관리자에게 먼저 문의해주세요</p>
+        </div>
+
+        <div class="rule-item">
+            <p class="rule-title">⚾️ 동행 직관 시 책임은 본인에게 있습니다.</p>
+            <p class="rule-description">- 채팅방 내에서 개인적으로 만남을 약속하고 발생하는 모든 사고 및 분쟁은 운영진이 책임지지 않습니다.</p>
+        </div>
+        
+    </div>
+</section>
+
+<section id="teams" class="tab-content">
+    <h2>🏟 KBO 10개 구단 정보</h2>
+    <p class="tip">팀 이름을 클릭하면 구단 공식 홈페이지로 이동합니다.</p>
+    <ul class="team-list">
+        <li><a href="https://www.lgtwins.com" target="_blank">LG 트윈스</a></li>
+        <li><a href="https://www.doosanbears.com" target="_blank">두산 베어스</a></li>
+        <li><a href="https://www.heroesbaseball.co.kr" target="_blank">키움 히어로즈</a></li>
+        <li><a href="https://www.ktwiz.co.kr" target="_blank">KT 위즈</a></li>
+        <li><a href="https://www.ssglanders.com" target="_blank">SSG 랜더스</a></li>
+        <li><a href="https://www.hanwhaeagles.co.kr" target="_blank">한화 이글스</a></li>
+        <li><a href="https://www.samsunglions.com" target="_blank">삼성 라이온즈</a></li>
+        <li><a href="https://tigers.co.kr" target="_blank">KIA 타이거즈</a></li>
+        <li><a href="https://www.giantsclub.com" target="_blank">롯데 자이언츠</a></li>
+        <li><a href="https://www.ncdinos.com" target="_blank">NC 다이노스</a></li>
+    </ul>
+</section>
+
+<section id="schedule" class="tab-content">
+    <h2>🗓 오늘의 경기 일정</h2>
+    <p style="text-align: center;">오늘의 KBO 전체 경기 일정을 KBO 공식 홈페이지에서 확인하세요.</p>
+    <div style="text-align: center;">
+        <a href="https://www.koreabaseball.com/Schedule/GameCenter/Main.aspx" target="_blank">
+            <button>오늘 경기 일정 보기</button>
+        </a>
+    </div>
+</section>
+
+<section id="info" class="tab-content">
+    <h2>📊 야구 정보</h2>
+    <p style="text-align: center;">최신 소식과 상세한 기록을 바로 확인하세요.</p>
+    <div class="button-group">
+        <a href="https://www.koreabaseball.com/MediaNews/News/BreakingNews/List.aspx" target="_blank">
+            <button>📰 KBO 공식 뉴스</button>
+        </a>
+        <a href="https://www.statiz.co.kr/" target="_blank">
+            <button style="background-color: #4CAF50;">📈 STATIZ 기록</button>
+        </a>
+    </div>
+</section>
+
+<section id="contact" class="tab-content">
+    <h2>💬 문의 및 신고</h2>
+    <p style="text-align: center;">규칙 위반 신고, 건의 사항 등은 아래 문의방으로 전달해 주세요.</p>
+    <div style="text-align: center;">
+        <a href="https://open.kakao.com/o/guehxdfh" target="_blank">
+            <button>2025 KBO 사담방</button>
+        </a>
+        <br>
+        <a href="https://open.kakao.com/o/ss4yn4th" target="_blank">
+            <button style="margin-top: 10px; background-color: #d32f2f;">🚨 관리자 신고/문의방 (비번: 1985)</button>
+        </a>
+    </div>
+</section>
+
+<script>
+    // 페이지 로드 시 초기 활성 탭 설정
+    document.addEventListener('DOMContentLoaded', () => {
+        // data-tab 속성을 사용하여 링크를 찾고 활성 탭으로 지정
+        showTab('notice', null, document.querySelector('a[data-tab="notice"]'));
+    });
+
+    // 탭 전환 및 활성 탭 스타일 변경 함수
+    function showTab(tabId, event, clickedLink) {
+        if (event) event.preventDefault();
+        
+        // 1. 모든 콘텐츠 숨기기
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        
+        // 2. 해당 ID 콘텐츠 표시
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+
+        // 3. 네비게이션 링크 활성 상태 업데이트
+        const navLinks = document.querySelectorAll('#main-nav a');
+        navLinks.forEach(link => link.classList.remove('active-tab'));
+        
+        // 클릭된 링크에 active-tab 클래스 추가
+        if (clickedLink) {
+            clickedLink.classList.add('active-tab');
+        } else {
+            // 초기 로드 시 data-tab을 이용해 링크를 찾아 active-tab 클래스 추가
+            const linkToActivate = document.querySelector(`a[data-tab="${tabId}"]`);
+            if (linkToActivate) linkToActivate.classList.add('active-tab');
+        }
+    }
+    
+    // 네비게이션 링크 클릭 이벤트 리스너 추가
+    document.querySelectorAll('#main-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const tabId = this.getAttribute('data-tab');
+            showTab(tabId, e, this);
+        });
+    });
+</script>
+
+</body>
+</html>
